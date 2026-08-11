@@ -232,13 +232,10 @@ function buildCard(coin) {
   card.append(toggle);
 
   const foot = el('div', 'card-foot');
-  const upBtn = el('button', 'mini-btn', 'Subir foto');
-  upBtn.type = 'button';
-  upBtn.addEventListener('click', (e) => { e.stopPropagation(); openModal(coin); });
   const detBtn = el('button', 'mini-btn', 'Detalle');
   detBtn.type = 'button';
   detBtn.addEventListener('click', (e) => { e.stopPropagation(); openModal(coin); });
-  foot.append(upBtn, detBtn);
+  foot.append(detBtn);
   card.append(foot);
 
   card.addEventListener('click', () => openModal(coin));
@@ -371,39 +368,8 @@ function buildModalSide(coin, side, label) {
   div.append(f);
 
   setImage(img, coin, side, 'full');
-
-  const actions = el('div', 'modal-side-actions');
-  const up = el('button', 'btn primary', 'Subir foto');
-  const file = el('input');
-  file.type = 'file';
-  file.accept = 'image/*';
-  file.hidden = true;
-  file.addEventListener('change', async () => {
-    if (!file.files[0]) return;
-    up.disabled = true;
-    up.textContent = 'Procesando…';
-    try {
-      const blob = await resizeImage(file.files[0]);
-      await dbPut(photoKey(coin.id, side), blob);
-      await setImage(img, coin, side, 'full');
-      syncCardImage(coin, side);
-    } catch (err) {
-      alert('No se pudo guardar la foto: ' + err.message);
-    }
-    up.disabled = false;
-    up.textContent = 'Subir foto';
-  });
-  up.addEventListener('click', () => file.click());
-
-  const del = el('button', 'btn danger', 'Quitar');
-  del.addEventListener('click', async () => {
-    await dbDel(photoKey(coin.id, side));
-    await setImage(img, coin, side, 'full');
-    syncCardImage(coin, side);
-  });
-
-  actions.append(up, del);
-  div.append(actions, file);
+  /* En móvil/versión pública: no se muestran controles de subir/eliminar imagen.
+     Se muestra únicamente la imagen de referencia o la foto existente. */
   return div;
 }
 
@@ -453,7 +419,7 @@ function openModal(coin) {
     '<br><b>Material:</b> ' + escHtml(coin.material || '—') +
     '<br><b>Cecas:</b> ' + escHtml(coin.mint || '—') +
     '<br><b>Tirada:</b> ' + escHtml(coin.mintage || '—') +
-    '<br><span class="hint">Las fotos que subas se guardan solo en este navegador (IndexedDB).</span>';
+    '<br><span class="hint">Imágenes mostradas como referencia.</span>';
   body.append(info);
 
   document.getElementById('modal').hidden = false;
