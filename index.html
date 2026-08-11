@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Colección de Quarters 25¢</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header class="app-header">
+  <div class="header-inner">
+    <div class="brand">
+      <div class="coin-logo" aria-hidden="true">
+        <span>25¢</span>
+      </div>
+      <div>
+        <h1>Colección de Quarters de EE. UU.</h1>
+        <p>Monedas de 25 centavos de dólar · Anverso y reverso</p>
+      </div>
+    </div>
+
+    <div class="stats">
+      <div class="progress-ring" id="progressRing">
+        <svg viewBox="0 0 120 120">
+          <circle class="ring-bg" cx="60" cy="60" r="52"></circle>
+          <circle class="ring-fg" id="ringFg" cx="60" cy="60" r="52"></circle>
+        </svg>
+        <div class="ring-label">
+          <strong id="ownedPct">0%</strong>
+          <span id="ownedCount">0</span>/<span id="totalCount">0</span>
+        </div>
+      </div>
+      <div class="stats-text">
+        <span class="stat-pill" id="ownedPill">Tienes 0</span>
+        <span class="stat-pill" id="missingPill">Faltan 0</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="progress-bar-track">
+    <div class="progress-bar" id="progressBar"></div>
+  </div>
+
+  <div class="series-progress" id="seriesProgress"></div>
+</header>
+
+<main>
+  <div class="toolbar">
+    <input type="search" id="searchInput" placeholder="Buscar por año o diseño…" autocomplete="off">
+    <select id="yearFilter" aria-label="Ir a un año"></select>
+    <select id="seriesFilter" aria-label="Filtrar por serie"></select>
+    <div class="view-filter" role="group" aria-label="Filtrar por estado">
+      <button class="view-btn active" data-view="all">Todas</button>
+      <button class="view-btn" data-view="owned">Tengo</button>
+      <button class="view-btn" data-view="missing">Me faltan</button>
+    </div>
+    <button id="exportBtn" class="tool-btn" title="Descargar respaldo de tu colección">Exportar</button>
+    <button id="importBtn" class="tool-btn" title="Restaurar colección desde un respaldo">Importar</button>
+    <input type="file" id="importFile" accept=".json,application/json" hidden>
+  </div>
+
+  <div id="coinGrid" class="coin-grid"></div>
+
+  <div id="emptyState" class="empty-state" hidden>
+    <p>No hay monedas que coincidan con el filtro.</p>
+  </div>
+</main>
+
+<div id="modal" class="modal" hidden>
+  <div class="modal-content">
+    <button class="modal-close" id="modalClose" aria-label="Cerrar">&times;</button>
+    <div class="modal-body" id="modalBody"></div>
+  </div>
+</div>
+
+<footer class="app-footer">
+  <p>Imágenes de referencia: Online Coin Club · Tus fotos se guardan solo en tu navegador (IndexedDB).</p>
+</footer>
+
+<script src="coins-data.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
