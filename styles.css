@@ -497,3 +497,17 @@ figcaption { font-size: 10.5px; color: var(--text-dim); text-transform: uppercas
   .coin-side-img { width: 62px; height: 62px; }
   .modal-sides { grid-template-columns: 1fr; }
 }
+
+/* Ocultar filtros y botones en pantallas pequeñas, mostrar solo el buscador */
+@media (max-width: 560px) {
+  /* Oculta todos los elementos de la barra excepto el input de búsqueda */
+  .toolbar > *:not(#searchInput) { display: none; }
+  .toolbar { padding: 8px 0; }
+  .toolbar input[type="search"] { flex: 1 1 100%; min-width: 0; }
+
+  /* Oculta las chips de series (tipo de moneda) en la cabecera */
+  .series-progress { display: none; }
+
+  /* Reduce márgenes en header para ganar espacio vertical */
+  .app-header { padding: 12px 14px; }
+}
